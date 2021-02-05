@@ -1,6 +1,5 @@
 package com.security;
 
-import com.service.impl.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;;
@@ -36,17 +35,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-//                .antMatchers("/**").permitAll();
-//                .antMatchers("/users/**", "/table**").permitAll()
-                .antMatchers("/user/**").hasAnyRole("USER", "ADMIN")
-                .antMatchers("/admin/**", "/table/**").hasRole("ADMIN")
+                .antMatchers("/rest/user").hasRole("USER")
+                .antMatchers("/rest").hasRole("ADMIN")
                 .anyRequest().authenticated();
 
 
         http.formLogin()
-//                .loginPage("/login")
-//                .successHandler(loginSuccessHandler)
-                .defaultSuccessUrl("/users")
+                .successHandler(loginSuccessHandler)
                 .loginProcessingUrl("/login")
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")

@@ -15,13 +15,13 @@ import java.util.NoSuchElementException;
 import java.util.Set;
 
 @RestController
-public class RestAdminController {
+public class RestUserController {
 
     private UserService userService;
     private RoleService roleService;
     private PasswordEncoder passwordEncoder;
 
-    public RestAdminController(UserService userService,
+    public RestUserController(UserService userService,
                                RoleService roleService,
                                PasswordEncoder passwordEncoder) {
         this.userService = userService;
