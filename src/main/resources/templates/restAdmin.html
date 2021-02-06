@@ -17,7 +17,6 @@
     <nav class="navbar navbar-dark bg-dark justify-content-between" style="color: white">
         <div class="navbar-brand"><b><span th:text="${user.getEmail()}">email</span></b>
             with roles: <span th:utext="${user.getRoles()}">roles</span>
-            <!--            <a class="checkRole" th:onclick="'javascript:checkRole(' + ${user.id} + ');'">Check</a>-->
         </div>
         <a href="/logout" style="color: grey">Logout</a>
     </nav>
@@ -352,7 +351,8 @@
 
 <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
-<script type="text/javascript" th:src="@{/main.js}" src="../static/main.js"></script>
+<!--<script type="text/javascript" th:src="@{/main.js}" src="../static/main.js"></script>-->
+<script type="text/javascript" th:src="@{/fetch.js}" src="../static/fetch.js"></script>
 
 </body>
 </html>
