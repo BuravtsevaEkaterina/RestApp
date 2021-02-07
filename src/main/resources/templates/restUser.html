@@ -1,6 +1,5 @@
 <!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -22,7 +21,7 @@
     <div class="container-fluid">
         <div class="row">
             <nav class="nav flex-column nav-pills col-2 bg-white" style="padding: 15px 0px">
-                <a class="nav-item nav-link active" href="/user">User</a>
+                <a class="nav-item nav-link active" href="#userInfo">User</a>
             </nav>
 
             <div class="col-10 vh-100">
@@ -34,7 +33,7 @@
                     </div>
                     <div class="card-body">
 
-                        <table class="col-12 table table-striped">
+                        <table class="col-12 table table-striped" id="userInfo">
 
                             <thead>
                             <tr>

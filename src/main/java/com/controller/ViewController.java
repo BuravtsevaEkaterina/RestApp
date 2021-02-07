@@ -9,23 +9,21 @@ import org.springframework.web.bind.annotation.*;
 import com.service.UserService;
 
 @Controller
-public class AdminController {
+public class ViewController {
 
     @Autowired
     private UserService userService;
 
-    @GetMapping("/rest")
-    public String admin(Model model) {
-        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+    @GetMapping("/admin")
+    public String admin(Model model, Authentication auth) {
         model.addAttribute("user", userService.getUserByUsername(auth.getName()));
-
         return "restAdmin";
     }
 
-    @GetMapping("/rest/user")
+    @GetMapping("/user")
     public String user(Model model) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         model.addAttribute("user", userService.getUserByUsername(auth.getName()));
-        return "user";
+        return "restUser";
     }
 }

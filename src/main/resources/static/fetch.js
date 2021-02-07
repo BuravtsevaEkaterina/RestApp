@@ -9,7 +9,7 @@ $(document).ready(function () {
 
 
 function getAllUsers() {
-    fetch("/users")
+    fetch("/rest/admin/users")
         .then(function (response) {
             return response.json()
         })
@@ -23,7 +23,7 @@ function getAllUsers() {
 }
 
 function getUserInfo(id) {
-    fetch("/users/" + id)
+    fetch("/rest/admin/users/" + id)
         .then(function (response) {
             return response.json()
         })
@@ -51,7 +51,7 @@ function addNewUser() {
         roles: $("#role").val(),
     }
 
-    fetch("/users", {
+    fetch("/rest/admin/users", {
         method: "POST",
         body: JSON.stringify(newUser),
         headers: {
@@ -70,8 +70,10 @@ function addNewUser() {
 
 
 function editUserFunc() {
+    let id = $("#editId").val();
+
     let userForEdit = {
-        id: $("#editId").val(),
+        id: id,
         username: $("#editUsername").val(),
         lastname: $("#editLastname").val(),
         age: $("#editAge").val(),
@@ -80,7 +82,7 @@ function editUserFunc() {
         roles: $("#editRoles").val(),
     }
 
-    fetch("/edit", {
+    fetch("/rest/admin/users/" + id, {
         method: "PUT",
         body: JSON.stringify(userForEdit),
         headers: {
@@ -97,7 +99,7 @@ function editUserFunc() {
 function deleteUserFunc() {
     let id = $("#deleteId").val();
 
-    fetch("/users/" + id, {
+    fetch("/rest/admin/users/" + id, {
         method: "DELETE",
         headers: {
             "Content-Type": "application/json; charset=UTF-8"
@@ -111,7 +113,7 @@ function deleteUserFunc() {
 
 
 function getUserForUpd(id) {
-    fetch("/users/" + id)
+    fetch("/rest/admin/users/" + id)
         .then(function (response) {
             return response.json()
         })
@@ -130,7 +132,7 @@ function getUserForUpd(id) {
 }
 
 function getUserForDel(id) {
-    fetch("/users/" + id)
+    fetch("/rest/admin/users/" + id)
         .then(function (response) {
             return response.json()
         })
@@ -149,39 +151,47 @@ function getUserForDel(id) {
 
 function allUsersTableConstructor(data, id) {
     for (let i = 0; i < data.length; i++) {
-        let userRoles = "";
-        for (let element of data[i].roles) {
-            userRoles += element.rolename.substring(5) + " ";
-        }
-        let tr = $("<tr>").attr("id", data[i].id);
-        tr.append("" +
-            "<td>" + data[i].id + "</td>" +
-            "<td>" + data[i].username + "</td>" +
-            "<td>" + data[i].lastname + "</td>" +
-            "<td>" + data[i].age + "</td>" +
-            "<td>" + data[i].email + "</td>" +
-            "<td>" + userRoles + "</td>" +
-            "<td><button onclick='getUserForUpd(" + data[i].id + ")' class='btn btn-md btn-info eBtn' data-toggle='modal' data-target='#editModal'>Edit</button></td>" +
-            "<td><button onclick='getUserForDel(" + data[i].id + ")' class='btn btn-md btn-danger dBtn' data-toggle='modal' data-target='#deleteModal'>Delete</button> </td>"
-        );
-        id.append(tr);
+        let userRoles = setRoles(data[i].roles);
+
+        let row = `<tr>
+              <td>${data[i].id}</td>
+              <td>${data[i].username}</td>
+              <td>${data[i].lastname}</td>
+              <td>${data[i].age}</td>
+              <td>${data[i].email}</td>
+              <td>${userRoles}</td>
+              <td><button onclick=getUserForUpd(${data[i].id}) 
+              class='btn btn-md btn-info eBtn' data-toggle='modal' 
+              data-target='#editModal'>Edit
+              </button></td>" +
+              <td><button onclick=getUserForDel(${data[i].id})
+              class='btn btn-md btn-danger dBtn' data-toggle='modal' 
+              data-target='#deleteModal'>Delete
+              </button></td>
+              </tr>`
+        id.append(row);
     }
 }
 
 function userTableConstructor(data, id) {
-    let userRoles = "";
-    for (let element of data.roles) {
-        userRoles += element.rolename.substring(5) + " ";
-    }
-    let tr = $("<tr>").attr("id", data.id);
-    tr.append("" +
-        "<td>" + data.id + "</td>" +
-        "<td>" + data.username + "</td>" +
-        "<td>" + data.lastname + "</td>" +
-        "<td>" + data.age + "</td>" +
-        "<td>" + data.email + "</td>" +
-        "<td>" + userRoles + "</td>"
-    );
-    id.append(tr);
+
+    let userRoles = setRoles(data.roles);
+
+    let row = `<tr>
+              <td>${data.id}</td>
+              <td>${data.username}</td>
+              <td>${data.lastname}</td>
+              <td>${data.age}</td>
+              <td>${data.email}</td>
+              <td>${userRoles}</td>
+              </tr>`
+    id.append(row);
 }
 
+function setRoles(roles) {
+    let userRoles = "";
+    for (let role of roles) {
+        userRoles += role.rolename.substring(5) + " ";
+    }
+    return userRoles;
+}
